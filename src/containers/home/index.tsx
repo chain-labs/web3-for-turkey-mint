@@ -122,10 +122,9 @@ const HomeContainer = () => {
     <Box
       className="container"
       backgroundColor={BACKGROUND_COLOR}
-      height="100vh"
-      width="100vw"
       pt="4rem"
       position="relative"
+      pb={connected ? "10rem" : "0"}
     >
       <Box
         maxWidth="128rem"
@@ -283,9 +282,11 @@ const HomeContainer = () => {
         <Box as="h1" id="hero-text" color={TEXT_COLOR}>
           {COLLECTION_NAME}
         </Box>
-        <Box as="h5" id="desc-text" color={TEXT_COLOR}>
-          {COLLECTION_DESCRIPTION}
-        </Box>
+        {COLLECTION_DESCRIPTION.map((description) => (
+          <Box as="h5" id="desc-text" color={TEXT_COLOR} key={description[0]}>
+            {description}
+          </Box>
+        ))}
         {connected && SHOW_TOKENS_CLAIMED ? (
           <Box
             as="h3"

@@ -41,9 +41,8 @@
 }
 
 .container {
-  min-height: 100vh;
   min-width: 100vw;
-  padding-top: 40px;
+  min-height: 100vh;
   position: relative;
 
   * {
@@ -51,7 +50,7 @@
   }
 
   .simplr {
-    position: absolute;
+    position: fixed;
     bottom: 64px;
     right: 80px;
     @media screen and (max-width: 768px) {

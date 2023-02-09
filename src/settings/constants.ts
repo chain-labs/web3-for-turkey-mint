@@ -1,13 +1,15 @@
-export const BACKGROUND_COLOR = "#f2e3d4";
+export const BACKGROUND_COLOR = "#211c1f";
 export const BUTTON_COLOR = "#d34b36";
-export const TEXT_COLOR = "#0c0c0c";
+export const TEXT_COLOR = "#fafafa";
 export const BUTTON_TEXT_COLOR = BACKGROUND_COLOR;
 export const TOKEN_COUNTER_COLOR = "#EB48EB";
 export const INPUT_BORDER_COLOR = TEXT_COLOR;
 
 export const COLLECTION_NAME = "Web3 for Turkey";
-export const COLLECTION_DESCRIPTION =
-  "The NFT art depicts the aftermath of the Turkey earthquake, with buildings collapsing and people in distress. However, despite the chaos, there is a symbol of hope in the form of the Turkish flag, soaring high above the buildings, representing the resilience of the Turkish people. In the horizon, there is a glimmer of hope, a sign that things will get better and that people will come together to help each other in these trying times. The overall theme of this art is hope and unity in the face of adversity.";
+export const COLLECTION_DESCRIPTION = [
+  "The NFT art depicts the aftermath of the Turkey earthquake, with buildings collapsing and people in distress. However, despite the chaos, there is a symbol of hope in the form of the Turkish flag, soaring high above the buildings, representing the resilience of the Turkish people. In the horizon, there is a glimmer of hope, a sign that things will get better and that people will come together to help each other in these trying times. The overall theme of this art is hope and unity in the face of adversity.",
+  "100% of the mint amount will be donated to the charities helping the earthquake victims in Turkey.",
+];
 export const SHOW_TOKENS_CLAIMED = true;
 export const SHOW_TOTAL_TOKENS = false;
 

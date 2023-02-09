@@ -211,7 +211,7 @@ const Mint = ({ provider, signer, user, incrementSupply }) => {
             <If
               condition={parseInt(noOfTokens) <= maxPurchase}
               then={
-                <Box as="h2" fontSize="1.2rem">{`Total ${
+                <Box as="h2" fontSize="1.2rem" color={TEXT_COLOR}>{`Total ${
                   noOfTokens
                     ? ethers.utils.formatUnits(
                         BigNumber.from(noOfTokens).mul(price).toString()
