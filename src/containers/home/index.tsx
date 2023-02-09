@@ -430,5 +430,9 @@ const Timer = ({ timestamp, type }: TimerProps) => {
       } in ${value}`}</Box>
     );
   }
-  return null;
+  return (
+    <Box as="h3" fontSize="1.8rem" color={TEXT_COLOR}>
+      {"Loading..."}
+    </Box>
+  );
 };
