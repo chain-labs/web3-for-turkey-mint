@@ -384,45 +384,57 @@ const Timer = ({ timestamp, type }: TimerProps) => {
     const interval = setInterval(() => {
       const now = Math.floor(Date.now() / 1000);
       const remaining = timestamp - now;
-      if (remaining > DAY_SECONDS) {
-        const days = Math.floor(remaining / DAY_SECONDS);
-        const hours = Math.floor(
-          (remaining - DAY_SECONDS * days) / HOUR_SECONDS
-        );
-        const minutes = Math.floor(
-          (remaining - DAY_SECONDS * days - hours * HOUR_SECONDS) /
-            MINUTE_SECONDS
-        );
-        const seconds = Math.floor(
-          remaining -
-            DAY_SECONDS * days -
-            hours * HOUR_SECONDS -
-            minutes * MINUTE_SECONDS
-        );
-        const countdown = `${days < 10 ? 0 : ""}${days}:${
-          hours < 10 ? 0 : ""
-        }${hours}:${minutes < 10 ? 0 : ""}${minutes}:${
-          seconds < 10 ? 0 : ""
-        }${seconds}`;
 
-        setValue(countdown);
+      if (remaining <= 0) {
+        setValue("Ended");
       } else {
-        const hours = Math.floor(remaining / HOUR_SECONDS);
-        const minutes = Math.floor(
-          (remaining - hours * HOUR_SECONDS) / MINUTE_SECONDS
-        );
-        const seconds = Math.floor(
-          remaining - hours * HOUR_SECONDS - minutes * MINUTE_SECONDS
-        );
-        const countdown = `${hours < 10 ? 0 : ""}${hours}:${
-          minutes < 10 ? 0 : ""
-        }${minutes}:${seconds < 10 ? 0 : ""}${seconds}`;
-        setValue(countdown);
+        if (remaining > DAY_SECONDS) {
+          const days = Math.floor(remaining / DAY_SECONDS);
+          const hours = Math.floor(
+            (remaining - DAY_SECONDS * days) / HOUR_SECONDS
+          );
+          const minutes = Math.floor(
+            (remaining - DAY_SECONDS * days - hours * HOUR_SECONDS) /
+              MINUTE_SECONDS
+          );
+          const seconds = Math.floor(
+            remaining -
+              DAY_SECONDS * days -
+              hours * HOUR_SECONDS -
+              minutes * MINUTE_SECONDS
+          );
+          const countdown = `${days < 10 ? 0 : ""}${days}:${
+            hours < 10 ? 0 : ""
+          }${hours}:${minutes < 10 ? 0 : ""}${minutes}:${
+            seconds < 10 ? 0 : ""
+          }${seconds}`;
+
+          setValue(countdown);
+        } else {
+          const hours = Math.floor(remaining / HOUR_SECONDS);
+          const minutes = Math.floor(
+            (remaining - hours * HOUR_SECONDS) / MINUTE_SECONDS
+          );
+          const seconds = Math.floor(
+            remaining - hours * HOUR_SECONDS - minutes * MINUTE_SECONDS
+          );
+          const countdown = `${hours < 10 ? 0 : ""}${hours}:${
+            minutes < 10 ? 0 : ""
+          }${minutes}:${seconds < 10 ? 0 : ""}${seconds}`;
+          setValue(countdown);
+        }
       }
     }, 1000);
     return () => clearInterval(interval);
   }, [timestamp]);
 
+  if (value === "Ended") {
+    return (
+      <Box as="h3" fontSize="1.8rem" color={TEXT_COLOR} opacity={0}>
+        {"Loading..."}
+      </Box>
+    );
+  }
   if (!!value) {
     return (
       <Box as="h3" fontSize="1.8rem" color={TEXT_COLOR}>{`Minting ${

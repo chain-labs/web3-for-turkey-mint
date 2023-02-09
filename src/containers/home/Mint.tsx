@@ -2,11 +2,12 @@ import { BigNumber, ethers } from "ethers";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import If from "../../components/If";
-import { CONTRACT_ADDRESS, getUnit } from "../../constants";
+import { CONTRACT_ADDRESS, getUnit, OPENSEA_URL } from "../../constants";
 import useContract from "../../hooks/useContract";
 import {
   BUTTON_COLOR,
   BUTTON_TEXT_COLOR,
+  DISABLE_PUBLIC_SALE,
   INPUT_BORDER_COLOR,
   TEXT_COLOR,
 } from "../../settings/constants";
@@ -161,6 +162,21 @@ const Mint = ({ provider, signer, user, incrementSupply }) => {
       resetMint();
     }
   };
+
+  if (DISABLE_PUBLIC_SALE && saleType === 2) {
+    return (
+      <Box
+        as="a"
+        backgroundColor={BUTTON_COLOR}
+        color={BUTTON_TEXT_COLOR}
+        className="mint-btn"
+        href={OPENSEA_URL}
+        target="_blank"
+      >
+        {buttonText}
+      </Box>
+    );
+  }
 
   return (
     <Box className="mint-container" position="relative">

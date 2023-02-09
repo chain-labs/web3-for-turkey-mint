@@ -14,6 +14,7 @@ export const SHOW_TOKENS_CLAIMED = true;
 export const SHOW_TOTAL_TOKENS = false;
 export const SHOW_TIMER = true;
 export const TIMER_TYPE = "END";
+export const DISABLE_PUBLIC_SALE = true;
 
 export const HERO_MEDIA =
   "https://ik.imagekit.io/xlvg9oc4k/Rariko.io_3d_NFT_art_of_turkey_earthquake_turkey_flag_at_the_to_b0941bdf-47f9-45e5-b340-71b4a3dd817b.png?ik-sdk-version=javascript-1.4.3&updatedAt=1675949644574";
