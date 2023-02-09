@@ -19,6 +19,7 @@ import {
   BACKGROUND_COLOR,
   BUTTON_COLOR,
   BUTTON_TEXT_COLOR,
+  COLLECTION_DESCRIPTION,
   COLLECTION_NAME,
   COLLECTION_WEBSITE,
   DISCORD_URL,
@@ -35,6 +36,7 @@ import {
 import Box from "../../components/Box";
 import Mint from "./Mint";
 import If from "../../components/If";
+import { SIMPLR_URL } from "../../constants";
 
 const condense = (text: string) => {
   return `${text?.substring(0, 5)}...${text?.substring(text.length - 5)}`;
@@ -140,8 +142,8 @@ const HomeContainer = () => {
               height="5rem"
               css={`
                 @media screen and (max-width: 768px) {
-                  height: 24px;
-                  width: 50vw;
+                  height: 64px;
+                  width: 20vw;
                 }
               `}
             >
@@ -149,7 +151,7 @@ const HomeContainer = () => {
                 src={LOGO_MEDIA}
                 alt="logo"
                 layout="fill"
-                objectFit="cover"
+                objectFit="contain"
               />
             </Box>
           </a>
@@ -158,7 +160,7 @@ const HomeContainer = () => {
           display="flex"
           flex={1}
           flexDirection="row"
-          justifyContent="space-evenly"
+          justifyContent="flex-end"
           css={`
             @media screen and (max-width: 768px) {
               width: 150px;
@@ -172,10 +174,12 @@ const HomeContainer = () => {
             href={getEtherscanUrl()}
             rel="noreferrer"
             target="_blank"
-            className="icon"
+            className="icon icon-eth"
             color={TEXT_COLOR}
             display="flex"
             justifyContent="center"
+            height="64px"
+            width="64px"
           >
             <EtherscanFill color={TEXT_COLOR} />
           </Box>
@@ -230,7 +234,7 @@ const HomeContainer = () => {
                 rel="noreferrer"
                 className="icon"
               >
-                <TelegramFill color={TEXT_COLOR} size={48} />
+                <TelegramFill color={TEXT_COLOR} />
               </Box>
             }
           />
@@ -278,6 +282,9 @@ const HomeContainer = () => {
         </Box>
         <Box as="h1" id="hero-text" color={TEXT_COLOR}>
           {COLLECTION_NAME}
+        </Box>
+        <Box as="h5" id="desc-text" color={TEXT_COLOR}>
+          {COLLECTION_DESCRIPTION}
         </Box>
         {connected && SHOW_TOKENS_CLAIMED ? (
           <Box
@@ -330,7 +337,7 @@ const HomeContainer = () => {
         )}
       </Box>
       <div className="simplr">
-        <a href="https://simplrcollection.com" target="_blank" rel="noreferrer">
+        <a href={SIMPLR_URL} target="_blank" rel="noreferrer">
           <Image
             src="/simplr_brand.svg"
             height={41}

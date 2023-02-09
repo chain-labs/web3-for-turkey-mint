@@ -13,7 +13,7 @@ export const getNetwork = () => {
     case "eth":
       return TEST_NETWORK ? "goerli" : "mainnet";
     case "polygon":
-      return TEST_NETWORK ? "mumbai" : "polygon";
+      return TEST_NETWORK ? "mumbai" : "matic";
   }
 };
 
@@ -27,7 +27,7 @@ export const getChain = () => {
       return "1";
     case "mumbai":
       return "80001";
-    case "polygon":
+    case "matic":
       return "137";
   }
 };
