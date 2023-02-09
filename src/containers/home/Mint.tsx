@@ -39,7 +39,6 @@ const Mint = ({ provider, signer, user, incrementSupply }) => {
       try {
         const isPresale = await contract.callStatic.isPresaleActive();
         const isSale = await contract.callStatic.isSaleActive();
-        console.log({ isSale, isPresale });
 
         if (isPresale) {
           setSaleType(1);

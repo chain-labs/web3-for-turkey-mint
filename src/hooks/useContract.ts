@@ -15,10 +15,7 @@ const useContract = (
       // @ts-ignore
       const abi =
         contracts?.[CHAIN_ID]?.[NETWORK].contracts?.[COLLECTION_TYPE]?.abi;
-      console.log({ abi });
-
       const contract = new ethers.Contract(address, abi, provider);
-      console.log({ contract });
 
       setContract(contract);
     }

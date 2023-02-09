@@ -26,10 +26,12 @@ import {
   HERO_MEDIA,
   INSTAGRAM_URL,
   LOGO_MEDIA,
+  SHOW_TIMER,
   SHOW_TOKENS_CLAIMED,
   SHOW_TOTAL_TOKENS,
   TELEGRAM_URL,
   TEXT_COLOR,
+  TIMER_TYPE,
   TOKEN_COUNTER_COLOR,
   TWITTER_URL,
 } from "../../settings/constants";
@@ -37,6 +39,7 @@ import Box from "../../components/Box";
 import Mint from "./Mint";
 import If from "../../components/If";
 import { SIMPLR_URL } from "../../constants";
+import { format } from "date-fns";
 
 const condense = (text: string) => {
   return `${text?.substring(0, 5)}...${text?.substring(text.length - 5)}`;
@@ -58,6 +61,8 @@ const HomeContainer = () => {
   const [user, provider, signer, connectWallet] = useWallet();
   const [totalSupply, setTotalSupply] = useState<number>();
   const [maximumTokens, setMaximumTokens] = useState<number>();
+  const [publicSaleStartTime, setPublicSaleStartTime] = useState<number>(0);
+  const [presaleStartTime, setPresaleStartTime] = useState<number>(0);
   const [contract] = useContract(CONTRACT_ADDRESS, provider);
   const [expandedImage, setExpandedImage] = useState(false);
 
@@ -78,6 +83,14 @@ const HomeContainer = () => {
         setMaximumTokens(maxSupply);
       } catch (err) {
         console.log(err, "Error in fetching max Supply");
+      }
+      try {
+        const publicSaleTime = await contract.callStatic.publicSaleStartTime();
+        setPublicSaleStartTime(publicSaleTime);
+        const preSaleTime = await contract.callStatic.presaleStartTime();
+        setPresaleStartTime(publicSaleTime);
+      } catch (err) {
+        console.log(err, "Error in fetching public sale start time");
       }
     };
 
@@ -111,12 +124,7 @@ const HomeContainer = () => {
   const handleClose = (e) => {
     e.preventDefault();
     setExpandedImage(false);
-    console.log("click");
   };
-
-  useEffect(() => {
-    console.log({ expandedImage });
-  }, [expandedImage]);
 
   return (
     <Box
@@ -299,6 +307,14 @@ const HomeContainer = () => {
               : `Tokens Claimed: ${totalSupply}`}
           </Box>
         ) : null}
+        {connected && SHOW_TIMER ? (
+          <Timer
+            timestamp={
+              TIMER_TYPE === "END" ? publicSaleStartTime : presaleStartTime
+            }
+            type={TIMER_TYPE}
+          />
+        ) : null}
       </Box>
       <Box className="mint-section">
         {!connected ? (
@@ -352,3 +368,67 @@ const HomeContainer = () => {
 };
 
 export default HomeContainer;
+
+interface TimerProps {
+  timestamp: number;
+  type: "START" | "END";
+}
+
+const DAY_SECONDS = 86400;
+const HOUR_SECONDS = 3600;
+const MINUTE_SECONDS = 60;
+
+const Timer = ({ timestamp, type }: TimerProps) => {
+  const [value, setValue] = useState("");
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = Math.floor(Date.now() / 1000);
+      const remaining = timestamp - now;
+      if (remaining > DAY_SECONDS) {
+        const days = Math.floor(remaining / DAY_SECONDS);
+        const hours = Math.floor(
+          (remaining - DAY_SECONDS * days) / HOUR_SECONDS
+        );
+        const minutes = Math.floor(
+          (remaining - DAY_SECONDS * days - hours * HOUR_SECONDS) /
+            MINUTE_SECONDS
+        );
+        const seconds = Math.floor(
+          remaining -
+            DAY_SECONDS * days -
+            hours * HOUR_SECONDS -
+            minutes * MINUTE_SECONDS
+        );
+        const countdown = `${days < 10 ? 0 : ""}${days}:${
+          hours < 10 ? 0 : ""
+        }${hours}:${minutes < 10 ? 0 : ""}${minutes}:${
+          seconds < 10 ? 0 : ""
+        }${seconds}`;
+
+        setValue(countdown);
+      } else {
+        const hours = Math.floor(remaining / HOUR_SECONDS);
+        const minutes = Math.floor(
+          (remaining - hours * HOUR_SECONDS) / MINUTE_SECONDS
+        );
+        const seconds = Math.floor(
+          remaining - hours * HOUR_SECONDS - minutes * MINUTE_SECONDS
+        );
+        const countdown = `${hours < 10 ? 0 : ""}${hours}:${
+          minutes < 10 ? 0 : ""
+        }${minutes}:${seconds < 10 ? 0 : ""}${seconds}`;
+        setValue(countdown);
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [timestamp]);
+
+  if (!!value) {
+    return (
+      <Box as="h3" fontSize="1.8rem" color={TEXT_COLOR}>{`Minting ${
+        type === "START" ? "Starts" : "Ends"
+      } in ${value}`}</Box>
+    );
+  }
+  return null;
+};

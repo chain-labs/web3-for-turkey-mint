@@ -12,6 +12,7 @@
     "@svgr/webpack": "^6.5.1",
     "akar-icons": "^1.9.17",
     "axios": "^0.27.2",
+    "date-fns": "^2.29.3",
     "ethers": "^5.6.8",
     "merkletreejs": "^0.2.32",
     "next": "12.1.6",

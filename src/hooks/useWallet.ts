@@ -56,11 +56,6 @@ const useWallet = (): any => {
           await provider.send("eth_requestAccounts", []);
           provider.getNetwork().then(async (network) => {
             const networkId = network.chainId;
-            console.log({
-              networkId,
-              CHAIN: parseInt(CHAIN_ID).toString(16),
-              CHAIN_ID,
-            });
 
             if (networkId !== parseInt(CHAIN_ID)) {
               // @ts-ignore
