@@ -15,6 +15,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>{WEBSITE_TITLE}</title>
         <link rel="shortcut icon" href={FAVICON_URL} />
+        <script
+          defer
+          data-domain="webt.simplrhq.com"
+          src="https://plausible.io/js/script.js"
+        ></script>
       </Head>
       <ThemeProvider theme={theme}>
         <Toaster />
