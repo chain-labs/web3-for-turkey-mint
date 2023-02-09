@@ -2,7 +2,7 @@ import { BigNumber, ethers } from "ethers";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import If from "../../components/If";
-import { CONTRACT_ADDRESS } from "../../constants";
+import { CONTRACT_ADDRESS, getUnit } from "../../constants";
 import useContract from "../../hooks/useContract";
 import {
   BUTTON_COLOR,
@@ -154,6 +154,8 @@ const Mint = ({ provider, signer, user, incrementSupply }) => {
         toast(`❌ You have exceeded your buying limit`);
       } else if (err.code === "INSUFFICIENT_FUNDS") {
         toast(`❌ Insufficient Funds in you wallet!`);
+      } else if (err?.data?.message?.search("insufficient funds")) {
+        toast(`❌ Insufficient Funds in you wallet!`);
       } else {
         toast(`❌ Something went wrong! Please Try Again`);
       }
@@ -181,7 +183,7 @@ const Mint = ({ provider, signer, user, incrementSupply }) => {
                 maxPurchase ? `(Max. ${maxPurchase})` : ""
               }`}
               value={noOfTokens}
-              onChange={(e) => setNoOfTokens(e.target.value)}
+              onChange={(e) => setNoOfTokens(parseInt(e.target.value))}
               min={1}
               max={maxPurchase ?? 10}
               disabled={disabledMintInput}
@@ -215,7 +217,7 @@ const Mint = ({ provider, signer, user, incrementSupply }) => {
                         BigNumber.from(noOfTokens).mul(price).toString()
                       )
                     : ""
-                } ETH`}</Box>
+                } ${getUnit()}`}</Box>
               }
               else={
                 <Box as="h2" fontSize="1.2rem" className="error" color="red">

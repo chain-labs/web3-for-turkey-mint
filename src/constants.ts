@@ -47,6 +47,17 @@ export const getEtherscanUrl = () => {
   }
 };
 
+export const getUnit = () => {
+  switch (NETWORK) {
+    case "goerli":
+    case "mainnet":
+      return "ETH";
+    case "mumbai":
+    case "matic":
+      return "MATIC";
+  }
+};
+
 export const SIMPLR_URL = "https://simplrhq.com";
 
 export const SALE_PAUSED = process.env.NEXT_PUBLIC_SALE_PAUSED === "true";
